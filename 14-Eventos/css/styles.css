@@ -85,6 +85,9 @@ img {
     justify-content: space-between;
     align-items: center;
 }
+.navegacion {
+    background-color: red;
+}
 .navegacion a{
     color: var(--claro);
     text-decoration: none;
@@ -157,6 +160,22 @@ main > section {
 
 .card img {
     width: 100%;
+}
+
+.card-bubbling {
+    height: 300px;
+    background-color: lightgreen;
+}
+.card-bubbling .info {
+    height: 200px;
+    background-color: lightcoral;
+}
+.card-bubbling .info .titulo {
+    height: 100px;
+    background-color: white;
+}
+.card-bubbling img {
+    display: none;
 }
 
 

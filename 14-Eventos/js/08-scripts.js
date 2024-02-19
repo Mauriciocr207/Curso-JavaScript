@@ -19,7 +19,12 @@ const info = document.createElement('div');
 info.classList.add('info');
 info.appendChild(parrafo1)
 info.appendChild(parrafo2)
+
+
 info.appendChild(parrafo3);
+info.onclick = () => {
+    nuevaFuncion(1);
+};
 
 // Vamos a crear la imagen
 const imagen = document.createElement('img');
@@ -38,3 +43,7 @@ contenedorCard.appendChild(info);
 // Insertarlo en el HTML...
 const contenedor = document.querySelector('.hacer .contenedor-cards');
 contenedor.appendChild(contenedorCard); // al inicio info
+
+function nuevaFuncion() {
+    console.log('desde nueva función');
+}
