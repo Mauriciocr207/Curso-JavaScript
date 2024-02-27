@@ -1,0 +1,30 @@
+input, textarea {
+    width: 100%;
+    outline: none;
+    height: 100%;
+}
+
+.input {
+    position: relative;
+}
+
+.alertMessage {
+    color: rgba(247, 68, 68, 0.693);
+    font-weight: bold;
+}
+
+.alertIcon {
+    color: rgba(255, 11, 11, 0.693);
+    position: absolute;
+    top: 14px;
+    right: 14px;
+}
+
+.form-success {
+    margin-top: 10px;
+    width: 100%;
+    padding: 5px;
+    text-align: center;
+    background-color: rgba(29, 184, 37, 0.693);
+    color: white;
+}
