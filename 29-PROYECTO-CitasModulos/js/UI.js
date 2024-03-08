@@ -1,3 +1,5 @@
+import { Citas } from "./Citas.js";
+
 const mascotaInput = document.querySelector('#mascota');
 const propietarioInput = document.querySelector('#propietario');
 const telefonoInput = document.querySelector('#telefono');
@@ -5,54 +7,11 @@ const fechaInput = document.querySelector('#fecha');
 const horaInput = document.querySelector('#hora');
 const sintomasInput = document.querySelector('#sintomas');
 const form = document.querySelector('#nueva-cita');
-
 const containerCitas = document.querySelector('#citas');
-(() => form.addEventListener('submit', addCita))();
 
-class Citas {
-    static citas = [];
-    
-    static add(obj) {
-        this.citas = [...this.citas, {
-            id: Date.now(),
-            ...obj,
-        }];
-    }
-
-    static update(idCita, obj) {
-        this.citas = this.citas.map((cita => cita.id === idCita ? obj:cita));
-    }
-
-    static delete(idCita) {
-        this.citas = this.citas.filter(({id}) => id !== idCita);
-    }
-
-    static getAll() {
-        return this.citas;
-    }
-
-    static getById(id) {
-        return this.citas.find(cita => cita.id === parseInt(id));
-    }
-
-    static validate(cita) {
-        const {
-            mascota, 
-            propietario, 
-            telefono, 
-            fecha,
-            hora,
-            sintomas
-        } = cita;
-        if(mascota === "" || propietario  === "" || telefono  === "" || fecha  === "" || hora  === "" || sintomas === "") {
-            return false;
-        }
-        return true;
-    }
-    
-}
-
-class UI {
+export class UI {
+    static #oncreate;
+    static #onupdate;
     static showAlert(message, type) {
         const alert = document.createElement('DIV');
         alert.classList.add('text-center', 'alert', 'd-block', 'col-12');
@@ -89,6 +48,7 @@ class UI {
         const newNodeCitaElement = this.createCitaHTML(cita);
         containerCitas.insertBefore(newNodeCitaElement, nodeElement);
         nodeElement.remove();
+        this.setFormToCreate();
     }
 
     static createCitaHTML({
@@ -150,15 +110,15 @@ class UI {
 
         form.querySelector('[type="submit"]').textContent = "Actualizar Cita";
         form.dataset.current = cita.id;
-        form.removeEventListener('submit', addCita);
-        form.addEventListener('submit', updateCita);
+        form.removeEventListener('submit', this.#oncreate);
+        form.addEventListener('submit', this.#onupdate);
     }
 
     static setFormToCreate() {
         form.reset();
         form.querySelector('[type="submit"]').textContent = "Crear Cita";
-        form.removeEventListener('submit', updateCita);
-        form.addEventListener('submit', addCita);
+        form.removeEventListener('submit', this.#onupdate);
+        form.addEventListener('submit', this.#oncreate);
         delete form.dataset.current
     }
 
@@ -172,48 +132,9 @@ class UI {
             sintomas: sintomasInput.value
         };
     }
-}
 
-
-// functiones de la lógica de negocio
-function addCita(e) {
-    e.preventDefault();
-    try {
-        const cita = UI.getAllInputsInfo();
-
-        if(!Citas.validate(cita)) {
-            throw new Error('Todos los campos son obligatorios');
-        }
-
-        Citas.add(cita);
-        form.reset();
-        UI.renderCitas(Citas.getAll());
-        UI.showAlert('Creado correctamente');
-    } catch (err) {
-        if(err instanceof Error) {
-            UI.showAlert(err.message, 'error');
-        }
+    static registerFormActions(oncreate, onupdate) {
+        this.#oncreate = oncreate;
+        this.#onupdate = onupdate;
     }
-}
-
-function updateCita(e) {
-    e.preventDefault();
-    try {
-        const id = e.target.dataset.current;
-        const cita = {id, ...UI.getAllInputsInfo()};
-        const nodeElement = document.querySelector(`[data-id="${id}"]`);
-        if(!Citas.validate(cita)) {
-            throw new Error('Todos los campos son obligatorios');
-        }
-
-        Citas.update(id, cita);
-        UI.updateRenderCita(cita, nodeElement);
-        UI.setFormToCreate();
-        UI.showAlert('Editado correctamente');
-    } catch (err) {
-        if(err instanceof Error) {
-            UI.showAlert(err.message, 'error');
-        }
-    }
-    
 }
