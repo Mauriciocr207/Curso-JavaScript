@@ -3,6 +3,7 @@ import router from "../routes/router.js";
 import sequelize from "../db/init.js";
 import path from 'path';
 import dotenv from 'dotenv';
+import { copyFileSync } from 'fs';
 dotenv.config();
 
 const app = express();
@@ -20,9 +21,20 @@ app.use((req, res, next) => {
     next();
 })
 app.use('/', router);
-app.listen(port, () => {
+const server = app.listen(port, () => {
     console.log(`Server opened on ${port}`);
     sequelize.sync()
         .then(() => console.log('Database synchronized succesfully'))
         .catch(err => console.log(err));
 });
+server.on('close', () => {
+    
+})
+process.on('SIGINT', () => {
+    console.log('Cerrando el servidor Express...');
+    server.close(() => {
+      console.log('Servidor Express cerrado');
+      app.emit('close'); // Emitir el evento 'close' para cerrar la conexión a la base de datos
+      process.exit(0);
+    });
+  });
