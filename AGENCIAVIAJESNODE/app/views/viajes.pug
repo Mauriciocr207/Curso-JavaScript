@@ -1,0 +1,18 @@
+extends ./layout/index
+
+block contenido
+    h1(class="mt-5 text-center") #{titlePage}
+    main.container.mt-5
+        if viajes && viajes.length === 0
+            .row 
+                p.col-md-12.text-center No hay viajes por el momento
+        if viajes && viajes.length > 0
+            .row.proximos-viajes
+                each viaje in viajes
+                    include ./components/viaje
+
+
+
+
+
+            
