@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../db/init.js";
-import BaseModel from "./baseModel.js";
+import BaseModel from "./BaseModel.js";
 
 export default class Viaje extends BaseModel {}
 
