@@ -15,6 +15,7 @@ export default class PaginasController {
                 testimoniales
             });
         } catch (error) {
+            console.log(error);
             res.render('error');
         }
     }
