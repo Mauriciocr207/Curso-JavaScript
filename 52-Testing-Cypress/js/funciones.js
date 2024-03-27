@@ -50,7 +50,7 @@ export function nuevaCita(e) {
         // Estamos editando
         administrarCitas.editarCita( {...citaObj} );
 
-        ui.imprimirAlerta('Guardado Correctamente');
+        ui.imprimirAlerta('Guardado correctamente');
 
         formulario.querySelector('button[type="submit"]').textContent = 'Crear Cita';
 

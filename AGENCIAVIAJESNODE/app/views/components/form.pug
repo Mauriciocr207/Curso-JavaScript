@@ -1,0 +1,36 @@
+.row.justify-content-center.col
+                .col-md-8
+                    form(action="/testimoniales" method="POST") 
+                        .form-group 
+                            label(for="nombre") Nombre 
+                            input#nombre.form-control(
+                                type="text" 
+                                placeholder="Tu nombre" 
+                                name="nombre"
+                                value=`${(values&&values.nombre?values.nombre:'')}` 
+                                class=`${(errores && errores.nombre) ? 'is-invalid':''}`
+                            )
+                            if errores && errores.nombre
+                                .invalid-feedback.text-left #{errores.nombre}
+                        .form-group 
+                            label(for="email") Correo electrónico 
+                            input#email.form-control(
+                                type="email" 
+                                placeholder="Tu email" 
+                                name="email" 
+                                value=`${(values&&values.email?values.email:'')}` 
+                                class=`${(errores && errores.email) ? 'is-invalid':''}`
+                            )
+                            if errores && errores.email
+                                .invalid-feedback.text-left #{errores.email}
+                        .form-group 
+                            label(for="mensaje") Mensaje
+                            textarea#mensaje.form-control(
+                                placeholder="Mensaje" 
+                                name="mensaje" 
+                                class=`${(errores && errores.mensaje) ? 'is-invalid':''}`
+                            )
+                                =`${(values&&values.mensaje?values.mensaje:'')}`
+                            if errores && errores.mensaje
+                                .invalid-feedback.text-left #{errores.mensaje}
+                        input.btn.btn-success.btn-block(type="submit")
