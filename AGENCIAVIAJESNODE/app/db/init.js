@@ -2,18 +2,18 @@ import { Sequelize } from "sequelize";
 import dotenv from 'dotenv';
 dotenv.config();
 const {
-    db_name,
-    db_host,
-    db_port,
-    db_user,
-    db_pass,
-    db_dialect,
+    DB_NAME,
+    DB_HOST,
+    DB_PORT,
+    DB_USER,
+    DB_PASS,
+    DB_DIALECT,
 } = process.env;
 
-const sequelize = new Sequelize(db_name, db_user, db_pass, {
-    dialect: db_dialect,
-    host: db_host,
-    port: db_port,
+const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
+    dialect: DB_DIALECT,
+    host: DB_HOST,
+    port: DB_PORT,
     define: {
         timestamps: false
     },
@@ -23,12 +23,12 @@ const sequelize = new Sequelize(db_name, db_user, db_pass, {
         acquire: 30000,
         idle: 1000,
     },
-    logging:false
+    logging: false
 });
 
 sequelize
     .authenticate()
-    .then(() => console.log('Database connected succesfully'))
-    .catch(() => console.log('Error connecting Database'));
+    .then(() => console.log('Database connected successfully'))
+    .catch(() => console.log('Error connecting to database'));
 
 export default sequelize;
