@@ -11,7 +11,7 @@ const {
 } = process.env;
 
 const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
-    dialect: DB_DIALECT,
+    dialect: "mysql",
     host: DB_HOST,
     port: DB_PORT,
     define: {
