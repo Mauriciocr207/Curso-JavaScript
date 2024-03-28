@@ -28,8 +28,14 @@ const server = app.listen(port, () => {
         .catch(err => console.log(err));
 });
 server.on('close', () => {
-    
-})
+  sequelize.close()
+    .then(() => {
+      console.log('DB cerrada correctamente')
+    })
+    .catch(() => {
+      console.log('Error cerrando DB');
+    })
+});
 process.on('SIGINT', () => {
     console.log('Cerrando el servidor Express...');
     server.close(() => {
